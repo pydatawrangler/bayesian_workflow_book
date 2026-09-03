@@ -1,0 +1,12 @@
+---
+title: "Notes for Bayesian Workflow Book"
+format: 
+    html:
+        embed-resources: true
+---
+
+Link to book website: https://avehtari.github.io/Bayesian-Workflow/
+
+Link to pdf of book: https://users.aalto.fi/\~ave/Bayesian-Workflow.pdf
+
+Link to Python versions of code: https://arviz-devs.github.io/bayesian-workflow/
