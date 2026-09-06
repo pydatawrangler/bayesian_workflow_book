@@ -10,3 +10,22 @@ Link to book website: https://avehtari.github.io/Bayesian-Workflow/
 Link to pdf of book: https://users.aalto.fi/\~ave/Bayesian-Workflow.pdf
 
 Link to Python versions of code: https://arviz-devs.github.io/bayesian-workflow/
+
+Link to Bayesian Data Analysis Course: https://avehtari.github.io/BDA_course_Aalto/
+
+
+## Chapter 1 - Bayesian theory and Bayesian practice
+
+Heavy read.  Will want to come back and re-read.
+
+## Chapter 2 - Statistical modeling and workflow
+
+Figure 2.1 is a great overview of the Bayesian workflow.
+
+## Chapter 3 - Computational tools
+
+See separate file `case_study_3.5_bioassay`.
+
+**Stopped before completing Case Study 3.5.**
+
+
