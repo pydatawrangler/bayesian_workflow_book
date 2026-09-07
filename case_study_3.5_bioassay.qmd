@@ -61,8 +61,10 @@ Data as list for CmdStanR
 bioassay_data <- with(df_bioassay,
 list(J = nrow(df_bioassay),
 x = dose,
-N = batch_size,
+n = batch_size,
 y = deaths))
+
+bioassay_data
 ```
 
 # Stan models and inference
@@ -78,4 +80,43 @@ Printing and graphing the fitted model
 ```{r}
 fit0 <- mod0$sample(data=bioassay_data, refresh=0)
 print(fit0)
+```
+## Model with prior
+
+```{r}
+mod1 <- cmdstan_model("bioassay1.stan", pedantic=TRUE)
+```
+## Printing and graphing the fitted model
+```{r}
+fit1 <- mod1$sample(data=bioassay_data, refresh=0)
+print(fit1)
+```
+
+```{r}
+draws1 <- fit1$draws(format="df")
+```
+
+```{r}
+par(mar=c(3,3,1,1), mgp=c(1.5,.5,0), tck=-.01)
+with(df_bioassay, 
+plot(dose, deaths/batch_size, xlab="Dose", ylab="Pr (death)", pch=19, cex=1.5, bty="l"))
+invlogit <- plogis
+for (s in sample(nrow(draws1), 20)) {
+  curve(invlogit(draws1$a[s] + draws1$b[s] * x), col="red", lwd=0.5, add=TRUE)
+}
+curve(invlogit(mean(draws1$a) + mean(draws1$b) * x), col="blue", lwd=2, add=TRUE)
+```
+
+```{r}
+draws1 |>
+  resample_draws(ndraws = 20) |>
+  expand_grid(x=seq(-1, 1, length = 100)) |>
+  mutate(y = plogis(a + b * x)) |>
+  ggplot() +
+  geom_point(data = df_bioassay, aes(x = dose, y = deaths / batch_size), size = 3) +
+  geom_line(aes(x = x, y = y, group = .draw), alpha = .5, color = "red") +
+  geom_function(fun = \(x) plogis(mean(draws1$a) + mean(draws1$b)*x),
+                color = "blue",
+                linewidth = 1) +
+  labs(x = "Dose log(g/ml)", y = "Pr(death)")
 ```
