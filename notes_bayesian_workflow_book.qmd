@@ -13,6 +13,9 @@ Link to Python versions of code: https://arviz-devs.github.io/bayesian-workflow/
 
 Link to Bayesian Data Analysis Course: https://avehtari.github.io/BDA_course_Aalto/
 
+Link to Modist for viewing distributions in marimo: https://github.com/williambdean/modist/tree/main
+
+
 
 ## Chapter 1 - Bayesian theory and Bayesian practice
 
@@ -24,8 +27,8 @@ Figure 2.1 is a great overview of the Bayesian workflow.
 
 ## Chapter 3 - Computational tools
 
-See separate file `case_study_3.5_bioassay`.
+See separate file `case_study_3.5_bioassay.R`.
 
-**Stopped before completing Case Study 3.5.**
+**Stopped on page 33 (45 of 550 pdf) before completing Case Study 3.5.**
 
 

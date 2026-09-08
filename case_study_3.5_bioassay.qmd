@@ -67,6 +67,9 @@ y = deaths))
 bioassay_data
 ```
 
+```{r}
+print_stan_file(root("bioassay0.stan"))
+```
 # Stan models and inference
 
 Stan model 0 (without priors)
