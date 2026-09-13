@@ -6,6 +6,10 @@ library(rprojroot)
 root <- has_file(".Bayesian-Workflow-root")$make_fix_file()
 library(cmdstanr)
 library(posterior)
+library(brms)
+library(bayesplot)
+theme_set(bayesplot::theme_default(base_family = "sans", base_size = 16))
+library(marginaleffects)
 
 print_stan_file <- function(file) {
   code <- readLines(file)
@@ -102,3 +106,38 @@ ggplot_LD50_mg_ml +
 ggplot_LD50_mg_ml +
   stat_slab(data = draws1, color = "gray", fill = NA) +
   coord_cartesian(expand = c(bottom = FALSE))
+
+# brms model and inference
+
+bfit1 <- brm(deaths | trials(batch_size) ~ dose,
+             family = binomial(),
+             prior = c(prior(normal(0, 5), class = Intercept),
+                       prior(normal(0, 5), lb = 0, class = b)),
+             data = df_bioassay,
+             refresh = 0)
+
+bfit1
+
+bdraws1 <- as_draws_df(bfit1)
+
+bdraws1 |>
+  resample_draws(ndraws = 20) |>
+  expand_grid(x=seq(-1, 1, length = 100)) |>
+  mutate(y = plogis(b_Intercept + b_dose * x)) |>
+  ggplot() +
+  geom_line(aes(x = x, y = y, group = .draw), alpha = .5, color = "red") +
+  geom_point(data = df_bioassay, aes(x = dose, y = deaths / batch_size), size = 3) +
+  geom_function(fun = \(x) plogis(mean(bdraws1$b_Intercept) + mean(bdraws1$b_dose)*x),
+                color = "blue",
+                linewidth = 1) +
+  labs(x = "Dose log(g/ml)", y = "Pr(death)")
+
+p1 <- plot(conditional_effects(bfit1), plot=FALSE)[[1]] +
+  labs(x = "Dose log(g/ml)", y = "Pr(death)")
+p1
+
+p1 +
+  geom_point(data = df_bioassay,
+  inherit.aes = FALSE,
+aes(x = dose, y = deaths / batch_size),
+size = 3)

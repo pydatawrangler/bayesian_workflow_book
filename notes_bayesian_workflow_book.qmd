@@ -29,6 +29,10 @@ Figure 2.1 is a great overview of the Bayesian workflow.
 
 See separate file `case_study_3.5_bioassay.R`.
 
-**Stopped on page 33 (45 of 550 pdf) before completing Case Study 3.5.**
+[ ] TODO: Need to finish reading text of Chapter 3 that goes along with the case study.
+
+## Chapter 4 - Introdution to workflow
+
+**Stopped at Chapter 4 on page 37 (49 of 550 pdf) after completing Case Study 3.5.**
 
 
